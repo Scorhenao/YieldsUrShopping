@@ -72,6 +72,16 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         (!item.items || item.items.length === 0) && (
           <Text>No items available in this list.</Text>
         )}
+
+      {expandedListId === item.id && (
+        <TouchableOpacity
+          style={HomeScreenStyles.addButton}
+          onPress={() =>
+            navigation.navigate('AddShoppingItem', {listId: item.id})
+          }>
+          <Text style={HomeScreenStyles.addButtonText}>+ Add Item</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 

@@ -118,4 +118,15 @@ export const HomeScreenStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  addButton: {
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: '#4CAF50',
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
 });
