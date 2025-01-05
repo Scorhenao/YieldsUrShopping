@@ -6,6 +6,19 @@ export const HomeScreenStyles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#f8f9fa',
   },
+  navbarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: 'black',
+    elevation: 5,
+  },
+  logo: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
