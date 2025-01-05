@@ -1,7 +1,14 @@
-import React, {useState} from 'react';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {useShoppingList} from '../hooks/useShoppingList';
+import {useRefresh} from '../context/RefreshContext';
 import {ShoppingList} from '../common/interfaces/ShoppingList';
 import {HomeScreenStyles} from '../styles/css/HomeScreenStyle';
 import {ShoppingItem} from '../common/interfaces/ShoppingItem';
@@ -13,16 +20,26 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const {items, saveItems} = useShoppingList();
+  const {refresh, triggerRefresh} = useRefresh();
   const [expandedListId, setExpandedListId] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const toggleItemsVisibility = (listId: string) => {
     setExpandedListId(expandedListId === listId ? null : listId);
   };
 
+  const onRefresh = useCallback(() => {
+    setIsRefreshing(true);
+    triggerRefresh(); // Activa el refresh global
+    // Aquí puedes agregar lógica adicional para recargar los datos, por ejemplo:
+    // saveItems(fetchedItems);
+    setTimeout(() => {
+      setIsRefreshing(false); // Finaliza el refresh después de 2 segundos
+    }, 2000);
+  }, [triggerRefresh, saveItems]);
+
   const renderItem = ({item}: {item: ShoppingList}) => (
     <View style={HomeScreenStyles.itemContainer}>
-      <Navbar />
-
       <View style={HomeScreenStyles.listHeader}>
         <Text style={HomeScreenStyles.itemText}>
           {item.name} ({item.purpose})
@@ -54,6 +71,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
   return (
     <View style={HomeScreenStyles.container}>
+      <Navbar />
       <Text style={HomeScreenStyles.title}>Shopping Lists</Text>
       <FlatList
         data={items}
@@ -63,6 +81,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           <Text style={HomeScreenStyles.emptyText}>
             There are no lists yet.
           </Text>
+        }
+        refreshControl={
+          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
         }
       />
       <TouchableOpacity

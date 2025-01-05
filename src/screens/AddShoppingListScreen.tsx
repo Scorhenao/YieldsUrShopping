@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {useShoppingList} from '../hooks/useShoppingList';
 import AddShoppingListScreenStyles from '../styles/css/AddShoppingListStyles';
+import NotificationManager, {notify} from '../components/NotificationManager';
 
 interface AddShoppingListScreenProps {
   navigation: NavigationProp<any>;
@@ -17,7 +18,7 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
 
   const addList = () => {
     if (listName.trim() === '' || listPurpose.trim() === '') {
-      Alert.alert('Error', 'Please fill in all fields.');
+      notify('danger', 'Error', 'Please fill in all fields.');
       return;
     }
 
@@ -31,11 +32,17 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
     saveItems([...items, newList]);
     setListName('');
     setListPurpose('');
+    notify(
+      'success',
+      'List Added',
+      'Your shopping list has been added successfully.',
+    );
     navigation.goBack();
   };
 
   return (
     <View style={AddShoppingListScreenStyles.container}>
+      <NotificationManager />{' '}
       <Text style={AddShoppingListScreenStyles.title}>Add Shopping List</Text>
       <TextInput
         style={AddShoppingListScreenStyles.input}

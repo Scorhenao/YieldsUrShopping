@@ -1,15 +1,15 @@
 import React from 'react';
 import AppNavigator from './src/navigation/AppNavigator';
-// import SplashScreen from 'react-native-splash-screen';
+import NotificationManager from './src/components/NotificationManager';
+import {RefreshProvider} from './src/context/RefreshContext';
 
 const App = () => {
-  // useEffect(() => {
-  //   SplashScreen.show();
-  //   setTimeout(() => {
-  //     SplashScreen.hide();
-  //   }, 3000);
-  // }, []);
-  return <AppNavigator />;
+  return (
+    <RefreshProvider>
+      <AppNavigator />
+      <NotificationManager />
+    </RefreshProvider>
+  );
 };
 
 export default App;
