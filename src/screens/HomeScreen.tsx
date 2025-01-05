@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {useShoppingList} from '../hooks/useShoppingList';
-import {useRefresh} from '../context/RefreshContext';
 import {ShoppingList} from '../common/interfaces/ShoppingList';
 import {HomeScreenStyles} from '../styles/css/HomeScreenStyle';
 import {ShoppingItem} from '../common/interfaces/ShoppingItem';
@@ -19,10 +18,13 @@ interface HomeScreenProps {
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
-  const {items, saveItems} = useShoppingList();
-  const {refresh, triggerRefresh} = useRefresh();
+  const {items} = useShoppingList();
   const [expandedListId, setExpandedListId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  useEffect(() => {
+    console.log('Items loaded:', items);
+  }, [items]);
 
   const toggleItemsVisibility = (listId: string) => {
     setExpandedListId(expandedListId === listId ? null : listId);
@@ -30,13 +32,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
 
   const onRefresh = useCallback(() => {
     setIsRefreshing(true);
-    triggerRefresh(); // Activa el refresh global
-    // Aquí puedes agregar lógica adicional para recargar los datos, por ejemplo:
-    // saveItems(fetchedItems);
     setTimeout(() => {
-      setIsRefreshing(false); // Finaliza el refresh después de 2 segundos
+      setIsRefreshing(false);
     }, 2000);
-  }, [triggerRefresh, saveItems]);
+  }, []);
+
+  const renderShoppingItem = ({item}: {item: ShoppingItem}) => (
+    <View>
+      <Text>
+        {item.name} (Quantity: {item.quantity}, Category: {item.category})
+        {item.purchased ? ' (Purchased)' : ''}
+      </Text>
+    </View>
+  );
 
   const renderItem = ({item}: {item: ShoppingList}) => (
     <View style={HomeScreenStyles.itemContainer}>
@@ -51,21 +59,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      {expandedListId === item.id && (
+      {expandedListId === item.id && item.items && item.items.length > 0 && (
         <FlatList
           data={item.items}
           keyExtractor={i => i.id}
-          renderItem={({item: shoppingItem}: {item: ShoppingItem}) => (
-            <View>
-              <Text>
-                {shoppingItem.name} (Quantity: {shoppingItem.quantity},
-                Category: {shoppingItem.category})
-              </Text>
-            </View>
-          )}
+          renderItem={renderShoppingItem}
           ListEmptyComponent={<Text>No items yet in this list.</Text>}
         />
       )}
+
+      {expandedListId === item.id &&
+        (!item.items || item.items.length === 0) && (
+          <Text>No items available in this list.</Text>
+        )}
     </View>
   );
 

@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ShoppingItem} from '../common/interfaces/ShoppingItem';
 import {ShoppingList} from '../common/interfaces/ShoppingList';
 
 export const useShoppingList = () => {
@@ -24,6 +23,7 @@ export const useShoppingList = () => {
     try {
       await AsyncStorage.setItem('@shopping_lists', JSON.stringify(newItems));
       setItems(newItems);
+      console.log(`The item saved is ${JSON.stringify(newItems)}`);
     } catch (error) {
       console.error('Error saving items:', error);
     }

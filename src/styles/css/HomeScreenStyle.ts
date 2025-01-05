@@ -43,6 +43,7 @@ export const HomeScreenStyles = StyleSheet.create({
   },
   itemText: {
     fontSize: 16,
+    color: '#000000',
   },
   arrow: {
     fontSize: 18,

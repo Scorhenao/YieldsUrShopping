@@ -4,6 +4,7 @@ import {NavigationProp} from '@react-navigation/native';
 import {useShoppingList} from '../hooks/useShoppingList';
 import AddShoppingListScreenStyles from '../styles/css/AddShoppingListStyles';
 import NotificationManager, {notify} from '../components/NotificationManager';
+import {ShoppingItem} from '../common/interfaces/ShoppingItem';
 
 interface AddShoppingListScreenProps {
   navigation: NavigationProp<any>;
@@ -26,7 +27,15 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
       id: `${Date.now()}`,
       name: listName,
       purpose: listPurpose,
-      items: [],
+      items: [
+        {
+          id: `${Date.now()}_item`,
+          name: 'Sample Item',
+          quantity: 1,
+          category: 'Misc',
+          purchased: false,
+        },
+      ] as ShoppingItem[],
     };
 
     saveItems([...items, newList]);
@@ -42,7 +51,7 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
 
   return (
     <View style={AddShoppingListScreenStyles.container}>
-      <NotificationManager />{' '}
+      <NotificationManager />
       <Text style={AddShoppingListScreenStyles.title}>Add Shopping List</Text>
       <TextInput
         style={AddShoppingListScreenStyles.input}
