@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const AddShoppingListScreenStyles = StyleSheet.create({
+const AddShoppingItemScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -23,10 +23,11 @@ const AddShoppingListScreenStyles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 20,
     backgroundColor: '#fff',
-    fontSize: 16, // Asegúrate de que el tamaño de la fuente sea adecuado
+    fontSize: 16,
+    color: '#000000',
   },
   placeholder: {
-    color: '#999', // Cambia el color del placeholder a un gris claro
+    color: '#999',
   },
   modalButtons: {
     flexDirection: 'row',
@@ -46,6 +47,24 @@ const AddShoppingListScreenStyles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  checkbox: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  checkboxText: {
+    fontSize: 16,
+    borderRadius: 5,
+    padding: 10,
+  },
+  statusReady: {
+    backgroundColor: '#d4edda',
+    color: '#155724',
+  },
+  statusMissed: {
+    backgroundColor: '#f8d7da',
+    color: '#721c24',
+  },
 });
 
-export default AddShoppingListScreenStyles;
+export default AddShoppingItemScreenStyles;

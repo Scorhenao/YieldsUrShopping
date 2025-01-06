@@ -1,49 +1,51 @@
 import {StyleSheet} from 'react-native';
 
-export default StyleSheet.create({
+const AddShoppingListScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f9f9f9',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#333',
   },
   input: {
-    height: 50,
-    borderColor: '#ddd',
+    width: '100%',
+    height: 40,
+    borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingLeft: 10,
-  },
-  checkbox: {
-    marginBottom: 10,
-    alignItems: 'center',
-    padding: 10,
-  },
-  checkboxText: {
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    backgroundColor: '#fff',
     fontSize: 16,
-    color: '#333',
+  },
+  placeholder: {
+    color: '#999',
   },
   modalButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
+    width: '100%',
   },
   modalButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: '#4CAF50',
-    paddingVertical: 12,
-    paddingHorizontal: 30,
     borderRadius: 5,
-  },
-  modalButtonText: {
-    color: '#fff',
-    fontSize: 16,
   },
   cancelButton: {
     backgroundColor: '#f44336',
   },
+  modalButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });
+
+export default AddShoppingListScreenStyles;

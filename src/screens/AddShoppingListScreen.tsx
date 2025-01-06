@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {useShoppingList} from '../hooks/useShoppingList';
-import AddShoppingListScreenStyles from '../styles/css/AddShoppingListStyles';
+import AddShoppingListScreenStyles from '../styles/css/AddShoppingListScreenStyles';
 import NotificationManager, {notify} from '../components/NotificationManager';
 import {ShoppingItem} from '../common/interfaces/ShoppingItem';
 
