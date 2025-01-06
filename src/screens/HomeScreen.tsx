@@ -15,6 +15,7 @@ import {ShoppingItem} from '../common/interfaces/ShoppingItem';
 import Navbar from '../components/NavBar';
 import {Switch} from 'react-native';
 import {notify} from '../components/NotificationManager';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>;
@@ -76,10 +77,25 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
       {cancelable: false},
     );
   };
-
   const renderShoppingItem = ({item}: {item: ShoppingItem}) => (
     <View style={HomeScreenStyles.shoppingItemContainer}>
-      <Text style={HomeScreenStyles.shoppingItemText}>Name: {item.name}</Text>
+      <View style={HomeScreenStyles.itemRow}>
+        <Text style={HomeScreenStyles.shoppingItemText}>{item.name}</Text>
+        <View style={HomeScreenStyles.iconContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('Edit item', item.id);
+            }}>
+            <Icon name="pencil" size={20} color="#007bff" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('Delete item', item.id);
+            }}>
+            <Icon name="trash" size={20} color="#dc3545" />
+          </TouchableOpacity>
+        </View>
+      </View>
       {item.quantity && (
         <Text style={HomeScreenStyles.shoppingItemText}>
           Quantity: {item.quantity}
@@ -90,7 +106,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           Category: {item.category}
         </Text>
       )}
-
       <View style={HomeScreenStyles.statusContainer}>
         <Text
           style={[

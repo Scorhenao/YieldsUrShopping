@@ -146,6 +146,19 @@ export const HomeScreenStyles = StyleSheet.create({
     borderColor: 'black',
   },
 
+  itemRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+  },
+
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+
   shoppingItemText: {
     fontSize: 16,
     color: '#333',
