@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
           <MaterialCommunityIcons
             name={isSun ? 'weather-sunny' : 'weather-night'}
             size={30}
-            color={darkMode ? 'white' : 'black'}
+            color={darkMode ? 'black' : 'black'}
           />
         </Animated.View>
       </TouchableOpacity>
