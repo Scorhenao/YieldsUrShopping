@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import AddShoppingListScreen from '../screens/AddShoppingListScreen';
 import AddItemScreen from '../screens/AddShoppingItemScreen';
 import EditShoppingItemScreen from '../screens/EditShoppingItemScreen';
+import EditShoppingListScreen from '../screens/EditShoppingListScreen';
 
 export default function AppNavigator() {
   const Stack = createNativeStackNavigator();
@@ -20,6 +21,11 @@ export default function AppNavigator() {
           name="AddShoppingList"
           options={{headerShown: false}}
           component={AddShoppingListScreen}
+        />
+        <Stack.Screen
+          name="EditShoppingList"
+          options={{headerShown: false}}
+          component={EditShoppingListScreen}
         />
         <Stack.Screen
           name="AddShoppingItem"
