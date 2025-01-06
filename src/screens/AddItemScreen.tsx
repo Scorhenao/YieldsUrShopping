@@ -102,10 +102,6 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
         />
 
         <View style={{width: '100%', marginBottom: 20}}>
-          <Text style={{marginBottom: 5, color: theme.colors.text}}>
-            Select or enter a category
-          </Text>
-
           <Picker
             selectedValue={itemCategory}
             style={{
@@ -126,6 +122,7 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
                 borderColor: theme.colors.border,
                 backgroundColor: theme.colors.inputBackground,
                 color: theme.colors.text,
+                marginTop: 20,
               },
             ]}
             placeholder="Or enter a custom category"

@@ -24,7 +24,7 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const {items, saveItems} = useShoppingList();
-  const {theme, toggleDarkMode} = useTheme();
+  const {theme} = useTheme();
   const [expandedListId, setExpandedListId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -80,6 +80,36 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     );
   };
 
+  const deleteShoppingItem = (listId: string, itemId: string) => {
+    Alert.alert(
+      'Delete Item',
+      'Are you sure you want to delete this item?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            const updatedItems = items.map(list => {
+              if (list.id === listId) {
+                return {
+                  ...list,
+                  items: list.items.filter(item => item.id !== itemId),
+                };
+              }
+              return list;
+            });
+            saveItems(updatedItems);
+            notify('success', 'Item Deleted', 'The item has been removed.');
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   const renderShoppingItem = ({item}: {item: ShoppingItem}) => (
     <View
       style={[
@@ -98,7 +128,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           <TouchableOpacity onPress={() => console.log('Edit item', item.id)}>
             <Icon name="pencil" size={24} color={theme.colors.text} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('Delete item', item.id)}>
+          <TouchableOpacity
+            onPress={() => deleteShoppingItem(expandedListId || '', item.id)}>
             <Icon name="trash" size={24} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
@@ -140,7 +171,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     </View>
   );
 
-  const renderItem = ({item}: {item: ShoppingList}) => {
+  const renderList = ({item}: {item: ShoppingList}) => {
     console.log(`Rendering items for list ${item.name}:`, item.items);
 
     return (
@@ -211,7 +242,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         <FlatList
           data={items}
           keyExtractor={item => item.id}
-          renderItem={renderItem}
+          renderItem={renderList}
           ListEmptyComponent={
             <Text
               style={[HomeScreenStyles.emptyText, {color: theme.colors.text}]}>
