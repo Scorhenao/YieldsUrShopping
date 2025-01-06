@@ -16,6 +16,7 @@ import Navbar from '../components/NavBar';
 import {Switch} from 'react-native';
 import {notify} from '../components/NotificationManager';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useTheme} from '../context/ThemeContext';
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>;
@@ -23,6 +24,7 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const {items, saveItems} = useShoppingList();
+  const {theme, toggleDarkMode} = useTheme();
   const [expandedListId, setExpandedListId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -77,32 +79,45 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
       {cancelable: false},
     );
   };
+
   const renderShoppingItem = ({item}: {item: ShoppingItem}) => (
-    <View style={HomeScreenStyles.shoppingItemContainer}>
+    <View
+      style={[
+        HomeScreenStyles.shoppingItemContainer,
+        {backgroundColor: theme.colors.background},
+      ]}>
       <View style={HomeScreenStyles.itemRow}>
-        <Text style={HomeScreenStyles.shoppingItemText}>{item.name}</Text>
+        <Text
+          style={[
+            HomeScreenStyles.shoppingItemText,
+            {color: theme.colors.text},
+          ]}>
+          {item.name}
+        </Text>
         <View style={HomeScreenStyles.iconContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              console.log('Edit item', item.id);
-            }}>
-            <Icon name="pencil" size={20} color="#007bff" />
+          <TouchableOpacity onPress={() => console.log('Edit item', item.id)}>
+            <Icon name="pencil" size={24} color={theme.colors.text} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              console.log('Delete item', item.id);
-            }}>
-            <Icon name="trash" size={20} color="#dc3545" />
+          <TouchableOpacity onPress={() => console.log('Delete item', item.id)}>
+            <Icon name="trash" size={24} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>
       {item.quantity && (
-        <Text style={HomeScreenStyles.shoppingItemText}>
+        <Text
+          style={[
+            HomeScreenStyles.shoppingItemText,
+            {color: theme.colors.text},
+          ]}>
           Quantity: {item.quantity}
         </Text>
       )}
       {item.category && (
-        <Text style={HomeScreenStyles.shoppingItemText}>
+        <Text
+          style={[
+            HomeScreenStyles.shoppingItemText,
+            {color: theme.colors.text},
+          ]}>
           Category: {item.category}
         </Text>
       )}
@@ -129,17 +144,23 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     console.log(`Rendering items for list ${item.name}:`, item.items);
 
     return (
-      <View style={HomeScreenStyles.itemContainer}>
+      <View
+        style={[
+          HomeScreenStyles.itemContainer,
+          {backgroundColor: theme.colors.background},
+        ]}>
         <View style={HomeScreenStyles.listHeader}>
           <TouchableOpacity
             onPress={() => toggleItemsVisibility(item.id)}
             onLongPress={() => deleteShoppingList(item.id)}
             style={HomeScreenStyles.touchableRow}>
-            <Text style={HomeScreenStyles.itemText}>
+            <Text
+              style={[HomeScreenStyles.itemText, {color: theme.colors.text}]}>
               {item.name} {item.purpose ? `(${item.purpose})` : ''}
             </Text>
             <View style={HomeScreenStyles.arrowContainer}>
-              <Text style={HomeScreenStyles.arrow}>
+              <Text
+                style={[HomeScreenStyles.arrow, {color: theme.colors.text}]}>
                 {expandedListId === item.id ? '▲' : '▼'}
               </Text>
             </View>
@@ -155,7 +176,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
                 renderItem={renderShoppingItem}
               />
             ) : (
-              <Text style={HomeScreenStyles.emptyListText}>
+              <Text
+                style={[
+                  HomeScreenStyles.emptyListText,
+                  {color: theme.colors.text},
+                ]}>
                 This list doesn't have items.
               </Text>
             )}
@@ -175,14 +200,21 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   return (
     <>
       <Navbar />
-      <View style={HomeScreenStyles.container}>
-        <Text style={HomeScreenStyles.title}>Shopping Lists</Text>
+      <View
+        style={[
+          HomeScreenStyles.container,
+          {backgroundColor: theme.colors.background},
+        ]}>
+        <Text style={[HomeScreenStyles.title, {color: theme.colors.text}]}>
+          Shopping Lists
+        </Text>
         <FlatList
           data={items}
           keyExtractor={item => item.id}
           renderItem={renderItem}
           ListEmptyComponent={
-            <Text style={HomeScreenStyles.emptyText}>
+            <Text
+              style={[HomeScreenStyles.emptyText, {color: theme.colors.text}]}>
               There are no lists yet.
             </Text>
           }
@@ -191,7 +223,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           }
         />
         <TouchableOpacity
-          style={HomeScreenStyles.floatingButton}
+          style={[
+            HomeScreenStyles.floatingButton,
+            {backgroundColor: theme.colors.button},
+          ]}
           onPress={() => navigation.navigate('AddShoppingList')}>
           <Text style={HomeScreenStyles.floatingButtonText}>+</Text>
         </TouchableOpacity>

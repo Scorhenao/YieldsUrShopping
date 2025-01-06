@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import {View, TouchableOpacity, Image, Animated} from 'react-native';
 import {HomeScreenStyles} from '../styles/css/HomeScreenStyle';
+import {useTheme} from '../context/ThemeContext';
 
 const MaterialCommunityIcons =
   require('react-native-vector-icons/MaterialCommunityIcons').default;
 
 const Navbar: React.FC = () => {
   const [isSun, setIsSun] = useState(true);
+  const {toggleDarkMode, darkMode} = useTheme();
+
   const [rotate] = useState(new Animated.Value(0));
 
   const toggleIcon = () => {
@@ -16,6 +19,7 @@ const Navbar: React.FC = () => {
       useNativeDriver: true,
     }).start();
 
+    toggleDarkMode();
     setIsSun(!isSun);
   };
 
@@ -39,7 +43,7 @@ const Navbar: React.FC = () => {
           <MaterialCommunityIcons
             name={isSun ? 'weather-sunny' : 'weather-night'}
             size={30}
-            color="black"
+            color={darkMode ? 'white' : 'black'}
           />
         </Animated.View>
       </TouchableOpacity>
