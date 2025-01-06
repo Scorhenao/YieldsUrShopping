@@ -2,11 +2,15 @@ import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {useShoppingList} from '../hooks/useShoppingList';
-import AddShoppingItemScreenStyles from '../styles/css/AddShoppingItemScreenStyles';
 import NotificationManager, {notify} from '../components/NotificationManager';
 import {ShoppingItem} from '../common/interfaces/ShoppingItem';
 import {DefaultCategories} from '../common/data/defaultCategories';
 import {Picker} from '@react-native-picker/picker';
+import Navbar from '../components/NavBar';
+import {useTheme} from '../context/ThemeContext';
+import LightModeTheme from '../theme/LightModeTheme';
+import DarkModeTheme from '../theme/DarkModeTheme';
+import AddShoppingItemScreenStyles from '../styles/css/AddShoppingItemScreenStyles';
 
 interface AddShoppingItemScreenProps {
   navigation: NavigationProp<any>;
@@ -21,6 +25,9 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
   const [itemCategory, setItemCategory] = useState('');
   const [itemPurchased, setItemPurchased] = useState(false);
   const [customCategory, setCustomCategory] = useState('');
+  const {darkMode} = useTheme();
+
+  const theme = darkMode ? DarkModeTheme : LightModeTheme;
 
   const addItem = () => {
     if (
@@ -63,85 +70,131 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
   };
 
   return (
-    <View style={AddShoppingItemScreenStyles.container}>
-      <NotificationManager />
-      <Text style={AddShoppingItemScreenStyles.title}>Add Shopping Item</Text>
-
-      <TextInput
-        style={AddShoppingItemScreenStyles.input}
-        placeholder="Enter item name"
-        placeholderTextColor="#000000"
-        value={itemName}
-        onChangeText={setItemName}
-      />
-
-      <View style={{width: '100%', marginBottom: 20}}>
-        <Text style={{marginBottom: 5}}>Select or enter a category</Text>
-
-        <Picker
-          selectedValue={itemCategory}
-          style={[
-            AddShoppingItemScreenStyles.input,
-            {backgroundColor: itemCategory === '' ? '#ffffff' : '#ffffff'},
-          ]}
-          onValueChange={setItemCategory}>
-          <Picker.Item label="Select a category" value="" />
-          {Object.keys(DefaultCategories).map((category, index) => (
-            <Picker.Item key={index} label={category} value={category} />
-          ))}
-        </Picker>
-
-        <TextInput
-          style={AddShoppingItemScreenStyles.input}
-          placeholder="Or enter a custom category"
-          placeholderTextColor="#000000"
-          value={customCategory}
-          onChangeText={setCustomCategory}
-          editable={itemCategory === ''}
-        />
-      </View>
-
-      <TextInput
-        style={AddShoppingItemScreenStyles.input}
-        placeholder="Enter item quantity"
-        placeholderTextColor="#000000"
-        value={String(itemQuantity)}
-        keyboardType="numeric"
-        onChangeText={text => setItemQuantity(Number(text))}
-      />
-
-      <TouchableOpacity
-        style={AddShoppingItemScreenStyles.checkbox}
-        onPress={() => setItemPurchased(!itemPurchased)}>
+    <>
+      <Navbar />
+      <View
+        style={[
+          AddShoppingItemScreenStyles.container,
+          {backgroundColor: theme.colors.background},
+        ]}>
+        <NotificationManager />
         <Text
           style={[
-            AddShoppingItemScreenStyles.checkboxText,
-            itemPurchased
-              ? AddShoppingItemScreenStyles.statusReady
-              : AddShoppingItemScreenStyles.statusMissed,
+            AddShoppingItemScreenStyles.title,
+            {color: theme.colors.text},
           ]}>
-          {itemPurchased ? 'Purchased' : 'Not Purchased'}
+          Add Shopping Item
         </Text>
-      </TouchableOpacity>
 
-      <View style={AddShoppingItemScreenStyles.modalButtons}>
-        <TouchableOpacity
-          style={AddShoppingItemScreenStyles.modalButton}
-          onPress={addItem}>
-          <Text style={AddShoppingItemScreenStyles.modalButtonText}>Save</Text>
-        </TouchableOpacity>
+        <TextInput
+          style={[
+            AddShoppingItemScreenStyles.input,
+            {
+              borderColor: theme.colors.border,
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.text,
+            },
+          ]}
+          placeholder="Enter item name"
+          placeholderTextColor={theme.colors.placeholder}
+          value={itemName}
+          onChangeText={setItemName}
+        />
+
+        <View style={{width: '100%', marginBottom: 20}}>
+          <Text style={{marginBottom: 5, color: theme.colors.text}}>
+            Select or enter a category
+          </Text>
+
+          <Picker
+            selectedValue={itemCategory}
+            style={{
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.text,
+            }}
+            onValueChange={setItemCategory}>
+            <Picker.Item label="Select a category" value="" />
+            {Object.keys(DefaultCategories).map((category, index) => (
+              <Picker.Item key={index} label={category} value={category} />
+            ))}
+          </Picker>
+
+          <TextInput
+            style={[
+              AddShoppingItemScreenStyles.input,
+              {
+                borderColor: theme.colors.border,
+                backgroundColor: theme.colors.inputBackground,
+                color: theme.colors.text,
+              },
+            ]}
+            placeholder="Or enter a custom category"
+            placeholderTextColor={theme.colors.placeholder}
+            value={customCategory}
+            onChangeText={setCustomCategory}
+            editable={itemCategory === ''}
+          />
+        </View>
+
+        <TextInput
+          style={[
+            AddShoppingItemScreenStyles.input,
+            {
+              borderColor: theme.colors.border,
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.text,
+            },
+          ]}
+          placeholder="Enter item quantity"
+          placeholderTextColor={theme.colors.placeholder}
+          value={String(itemQuantity)}
+          keyboardType="numeric"
+          onChangeText={text => setItemQuantity(Number(text))}
+        />
+
         <TouchableOpacity
           style={[
-            AddShoppingItemScreenStyles.modalButton,
-            AddShoppingItemScreenStyles.cancelButton,
+            AddShoppingItemScreenStyles.checkbox,
+            {backgroundColor: theme.colors.button},
           ]}
-          onPress={() => navigation.goBack()}>
-          <Text style={AddShoppingItemScreenStyles.modalButtonText}>
-            Cancel
+          onPress={() => setItemPurchased(!itemPurchased)}>
+          <Text style={{color: theme.colors.text}}>
+            {itemPurchased ? 'Purchased' : 'Not Purchased'}
           </Text>
         </TouchableOpacity>
+
+        <View style={AddShoppingItemScreenStyles.modalButtons}>
+          <TouchableOpacity
+            style={[
+              AddShoppingItemScreenStyles.modalButton,
+              {backgroundColor: theme.colors.button},
+            ]}
+            onPress={addItem}>
+            <Text
+              style={[
+                AddShoppingItemScreenStyles.modalButtonText,
+                {color: theme.colors.text},
+              ]}>
+              Save
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              AddShoppingItemScreenStyles.modalButton,
+              {backgroundColor: theme.colors.cancelButton},
+            ]}
+            onPress={() => navigation.goBack()}>
+            <Text
+              style={[
+                AddShoppingItemScreenStyles.modalButtonText,
+                {color: theme.colors.text},
+              ]}>
+              Cancel
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
