@@ -1,79 +1,103 @@
+
+# Lista de Compras Inteligente
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+## Descripción del Proyecto
+"Lista de Compras Inteligente" es una aplicación móvil desarrollada en React Native que permite gestionar listas de compras. Los usuarios pueden crear, actualizar y eliminar listas de compras y sus ítems, así como marcar ítems como comprados. La aplicación soporta modo oscuro y cuenta con un splash screen al inicio.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Instrucciones de Instalación y Ejecución
 
-## Step 1: Start the Metro Server
+>**Nota**: Asegúrate de haber completado las instrucciones de [Configuración del Entorno de React Native](https://reactnative.dev/docs/environment-setup) hasta el paso "Creación de una nueva aplicación" antes de continuar.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+### Paso 1: Iniciar el Servidor Metro
 
-To start Metro, run the following command from the _root_ of your React Native project:
+Primero, necesitarás iniciar **Metro**, el _bundler_ de JavaScript que se incluye con React Native.
+
+Para iniciar Metro, ejecuta el siguiente comando desde la raíz de tu proyecto React Native:
 
 ```bash
-# using npm
+# Usando npm
 npm start
 
-# OR using Yarn
+# O usando Yarn
 yarn start
 ```
 
-## Step 2: Start your Application
+### Paso 2: Iniciar tu Aplicación
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+Deja que Metro Bundler se ejecute en su propia terminal. Abre una nueva terminal desde la raíz de tu proyecto React Native. Ejecuta el siguiente comando para iniciar tu aplicación en **Android** o **iOS**:
 
-### For Android
+#### Para Android
 
 ```bash
-# using npm
+# Usando npm
 npm run android
 
-# OR using Yarn
+# O usando Yarn
 yarn android
 ```
 
-### For iOS
+#### Para iOS
 
 ```bash
-# using npm
+# Usando npm
 npm run ios
 
-# OR using Yarn
+# O usando Yarn
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+Si todo está configurado correctamente, deberías ver tu nueva aplicación ejecutándose en tu _Emulador de Android_ o _Simulador de iOS_.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+### Paso 3: Modificar tu Aplicación
 
-## Step 3: Modifying your App
+Ahora que has ejecutado la aplicación correctamente, puedes modificarla.
 
-Now that you have successfully run the app, let's modify it.
+1. Abre `App.tsx` en tu editor de texto favorito y edita algunas líneas.
+2. Para **Android**: Presiona la tecla <kbd>R</kbd> dos veces o selecciona **"Reload"** desde el **Menú de Desarrollador** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (en Windows y Linux) o <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (en macOS)) para ver los cambios.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+   Para **iOS**: Pulsa <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> en tu Simulador de iOS para recargar la app y ver los cambios.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+## Características Principales Implementadas
 
-## Congratulations! :tada:
+- 📋 **Gestión de Listas de Compras**: Los usuarios pueden crear, actualizar y eliminar listas de compras.
+- 🔽 **Dropdown de Ítems**: Al seleccionar una lista, los ítems de la lista se muestran en un dropdown.
+- 📝 **Gestión de Ítems**: Los ítems tienen las siguientes propiedades:
+  - `id`: Identificador único del ítem
+  - `name`: Nombre del ítem
+  - `quantity`: Cantidad del ítem
+  - `category`: Categoría del ítem
+  - `purchased`: Estado de compra (toggle para marcar si se compró o no)
+- 🌙 **Modo Oscuro**: Soporte para modo oscuro que cambia la apariencia de la aplicación.
+- 🖼 **Splash Screen**: Pantalla de carga personalizada con animaciones.
 
-You've successfully run and modified your React Native App. :partying_face:
+## Capturas de Pantalla
 
-### Now what?
+// Aquí puedes agregar tus capturas de pantalla.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+---
 
-# Troubleshooting
+## ¡Felicidades! :tada:
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Has ejecutado y modificado la aplicación correctamente. :partying_face:
 
-# Learn More
+### ¿Qué sigue ahora?
 
-To learn more about React Native, take a look at the following resources:
+- Si deseas agregar este código React Native a una aplicación existente, consulta la [guía de integración](https://reactnative.dev/docs/integration-with-existing-apps).
+- Si tienes curiosidad por aprender más sobre React Native, consulta la [Introducción a React Native](https://reactnative.dev/docs/getting-started).
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# Solución de Problemas
+
+Si no puedes hacer que esto funcione, consulta la página de [Solución de Problemas](https://reactnative.dev/docs/troubleshooting).
+
+# Aprende Más
+
+Para aprender más sobre React Native, consulta los siguientes recursos:
+
+- [Sitio web de React Native](https://reactnative.dev) - Aprende más sobre React Native.
+- [Comenzando](https://reactnative.dev/docs/environment-setup) - Una **visión general** de React Native y cómo configurar tu entorno.
+- [Aprende lo Básico](https://reactnative.dev/docs/getting-started) - Un **recorrido guiado** de los **conceptos básicos** de React Native.
+- [Blog](https://reactnative.dev/blog) - Lee los últimos posts oficiales del **Blog** de React Native.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - El repositorio de **código abierto** de React Native en GitHub.
+```
