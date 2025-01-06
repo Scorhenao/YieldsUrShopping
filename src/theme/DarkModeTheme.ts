@@ -7,6 +7,7 @@ const DarkModeTheme: IDarkModeTheme = {
     text: '#ffffffff',
     hover: '#83bd84',
     border: '#979696',
+    placeholder: '#ffffff8d',
   },
 };
 

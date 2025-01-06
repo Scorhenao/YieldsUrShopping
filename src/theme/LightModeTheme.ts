@@ -7,6 +7,7 @@ const LightModeTheme: ILightModeTheme = {
     text: '#000000',
     hover: '#83bd84',
     border: '#4c4b4b',
+    placeholder: '#211f1f',
   },
 };
 

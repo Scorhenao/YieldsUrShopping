@@ -129,4 +129,39 @@ export const HomeScreenStyles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+  shoppingItemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  shoppingItemText: {
+    fontSize: 16,
+    color: '#333',
+    flex: 1,
+  },
+  statusText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  statusReady: {
+    backgroundColor: '#d4edda',
+    color: '#155724',
+  },
+  statusMissed: {
+    backgroundColor: '#f8d7da',
+    color: '#721c24',
+  },
+  emptyListText: {
+    fontSize: 16,
+    color: '#888',
+    textAlign: 'center',
+    marginVertical: 10,
+  },
 });

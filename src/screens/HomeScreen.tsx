@@ -38,10 +38,18 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   }, []);
 
   const renderShoppingItem = ({item}: {item: ShoppingItem}) => (
-    <View>
-      <Text>
+    <View style={HomeScreenStyles.shoppingItemContainer}>
+      <Text style={HomeScreenStyles.shoppingItemText}>
         {item.name} (Quantity: {item.quantity}, Category: {item.category})
-        {item.purchased ? ' (Purchased)' : ''}
+      </Text>
+      <Text
+        style={[
+          HomeScreenStyles.statusText,
+          item.purchased
+            ? HomeScreenStyles.statusReady
+            : HomeScreenStyles.statusMissed,
+        ]}>
+        {item.purchased ? 'Ready' : 'Missed'}
       </Text>
     </View>
   );
@@ -59,28 +67,27 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-      {expandedListId === item.id && item.items && item.items.length > 0 && (
-        <FlatList
-          data={item.items}
-          keyExtractor={i => i.id}
-          renderItem={renderShoppingItem}
-          ListEmptyComponent={<Text>No items yet in this list.</Text>}
-        />
-      )}
-
-      {expandedListId === item.id &&
-        (!item.items || item.items.length === 0) && (
-          <Text>No items available in this list.</Text>
-        )}
-
       {expandedListId === item.id && (
-        <TouchableOpacity
-          style={HomeScreenStyles.addButton}
-          onPress={() =>
-            navigation.navigate('AddShoppingItem', {listId: item.id})
-          }>
-          <Text style={HomeScreenStyles.addButtonText}>+ Add Item</Text>
-        </TouchableOpacity>
+        <>
+          {item.items && item.items.length > 0 ? (
+            <FlatList
+              data={item.items}
+              keyExtractor={i => i.id}
+              renderItem={renderShoppingItem}
+            />
+          ) : (
+            <Text style={HomeScreenStyles.emptyListText}>
+              This list doesn't have items.
+            </Text>
+          )}
+          <TouchableOpacity
+            style={HomeScreenStyles.addButton}
+            onPress={() =>
+              navigation.navigate('AddShoppingItem', {listId: item.id})
+            }>
+            <Text style={HomeScreenStyles.addButtonText}>+ Add Item</Text>
+          </TouchableOpacity>
+        </>
       )}
     </View>
   );
