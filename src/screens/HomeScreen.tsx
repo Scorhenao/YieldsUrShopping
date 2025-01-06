@@ -12,13 +12,13 @@ import {ShoppingList} from '../common/interfaces/ShoppingList';
 import {HomeScreenStyles} from '../styles/css/HomeScreenStyle';
 import {ShoppingItem} from '../common/interfaces/ShoppingItem';
 import Navbar from '../components/NavBar';
-
+import {Switch} from 'react-native';
 interface HomeScreenProps {
   navigation: NavigationProp<any>;
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
-  const {items} = useShoppingList();
+  const {items, saveItems} = useShoppingList();
   const [expandedListId, setExpandedListId] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -37,24 +37,49 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     }, 2000);
   }, []);
 
+  const handleTogglePurchased = (itemId: string, newValue: boolean) => {
+    const updatedItems = items.map(list => {
+      const updatedItemsList = list.items.map(item =>
+        item.id === itemId ? {...item, purchased: newValue} : item,
+      );
+      return {...list, items: updatedItemsList};
+    });
+
+    saveItems(updatedItems);
+  };
+
   const renderShoppingItem = ({item}: {item: ShoppingItem}) => (
     <View style={HomeScreenStyles.shoppingItemContainer}>
-      <Text style={HomeScreenStyles.shoppingItemText}>
-        {item.name} {item.quantity ? `(Quantity: ${item.quantity})` : ''}
-        {item.category ? `(Category: ${item.category})` : ''}
-      </Text>
-      <Text
-        style={[
-          HomeScreenStyles.statusText,
-          item.purchased
-            ? HomeScreenStyles.statusReady
-            : HomeScreenStyles.statusMissed,
-        ]}>
-        {item.purchased ? 'Ready' : 'Missed'}
-      </Text>
+      <Text style={HomeScreenStyles.shoppingItemText}>Name: {item.name}</Text>
+      {item.quantity && (
+        <Text style={HomeScreenStyles.shoppingItemText}>
+          Quantity: {item.quantity}
+        </Text>
+      )}
+      {item.category && (
+        <Text style={HomeScreenStyles.shoppingItemText}>
+          Category: {item.category}
+        </Text>
+      )}
+
+      <View style={HomeScreenStyles.statusContainer}>
+        <Text
+          style={[
+            HomeScreenStyles.statusText,
+            item.purchased
+              ? HomeScreenStyles.statusReady
+              : HomeScreenStyles.statusMissed,
+          ]}>
+          {item.purchased ? 'Ready' : 'Missed'}
+        </Text>
+
+        <Switch
+          value={item.purchased}
+          onValueChange={newValue => handleTogglePurchased(item.id, newValue)}
+        />
+      </View>
     </View>
   );
-
   const renderItem = ({item}: {item: ShoppingList}) => {
     console.log(`Rendering items for list ${item.name}:`, item.items);
 
