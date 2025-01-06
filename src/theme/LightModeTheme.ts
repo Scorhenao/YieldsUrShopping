@@ -1,4 +1,13 @@
-interface ILightModeTheme {}
+interface ILightModeTheme {
+  colors: {
+    background: string;
+    button: string;
+    text: string;
+    hover: string;
+    border: string;
+    placeholder: string;
+  };
+}
 
 const LightModeTheme: ILightModeTheme = {
   colors: {

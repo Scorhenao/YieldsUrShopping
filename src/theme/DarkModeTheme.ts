@@ -1,4 +1,13 @@
-interface IDarkModeTheme {}
+interface IDarkModeTheme {
+  colors: {
+    background: string;
+    button: string;
+    text: string;
+    hover: string;
+    border: string;
+    placeholder: string;
+  };
+}
 
 const DarkModeTheme: IDarkModeTheme = {
   colors: {

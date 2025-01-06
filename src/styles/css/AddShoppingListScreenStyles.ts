@@ -6,13 +6,11 @@ const AddShoppingListScreenStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#f9f9f9',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#333',
   },
   input: {
     width: '100%',
@@ -22,11 +20,7 @@ const AddShoppingListScreenStyles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 10,
     marginBottom: 20,
-    backgroundColor: '#fff',
     fontSize: 16,
-  },
-  placeholder: {
-    color: '#999',
   },
   modalButtons: {
     flexDirection: 'row',
@@ -36,14 +30,12 @@ const AddShoppingListScreenStyles = StyleSheet.create({
   modalButton: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: '#4CAF50',
     borderRadius: 5,
   },
   cancelButton: {
     backgroundColor: '#f44336',
   },
   modalButtonText: {
-    color: '#fff',
     fontWeight: 'bold',
   },
 });
