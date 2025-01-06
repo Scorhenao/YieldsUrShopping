@@ -6,12 +6,18 @@ import AddShoppingListScreen from '../screens/AddShoppingListScreen';
 import AddItemScreen from '../screens/AddShoppingItemScreen';
 import EditShoppingItemScreen from '../screens/EditShoppingItemScreen';
 import EditShoppingListScreen from '../screens/EditShoppingListScreen';
+import Splash from '../screens/SplashScreen';
 
 export default function AppNavigator() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="SplashScreen">
+        <Stack.Screen
+          name="SplashScreen"
+          options={{headerShown: false}}
+          component={Splash}
+        />
         <Stack.Screen
           name="Home"
           options={{headerShown: false}}
