@@ -18,6 +18,7 @@ interface AddShoppingItemScreenProps {
 
 const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
   navigation,
+  route,
 }) => {
   const {saveItems, items} = useShoppingList();
   const [itemName, setItemName] = useState('');
@@ -26,6 +27,7 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
   const [itemPurchased, setItemPurchased] = useState(false);
   const [customCategory, setCustomCategory] = useState('');
   const {darkMode} = useTheme();
+  const {listId} = route.params;
 
   const theme = darkMode ? DarkModeTheme : LightModeTheme;
 
@@ -49,24 +51,32 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
     };
 
     const updatedItems = items.map(list => {
-      if (list.id === 'someListId') {
+      if (list.id === listId) {
         return {...list, items: [...list.items, newItem]};
       }
       return list;
     });
 
-    saveItems(updatedItems);
+    saveItems(updatedItems); // Guardar los items actualizados
+
     setItemName('');
     setItemCategory('');
     setItemQuantity(1);
     setItemPurchased(false);
     setCustomCategory('');
+
     notify(
       'success',
       'Item Added',
       'Your shopping item has been added successfully.',
     );
-    navigation.goBack();
+
+    // Aseguramos que se recarguen los datos en la pantalla de inicio
+    if (route.params?.onGoBack) {
+      route.params.onGoBack(); // Llamar a onGoBack para refrescar los datos
+    }
+
+    navigation.goBack(); // Volver a la pantalla de inicio
   };
 
   return (

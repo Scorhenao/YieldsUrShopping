@@ -57,7 +57,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     }
     setIsRefreshing(false);
   }, [saveItems]);
-
   const toggleItemsVisibility = (listId: string) => {
     setExpandedListId(expandedListId === listId ? null : listId);
   };
@@ -307,7 +306,10 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
             <TouchableOpacity
               style={HomeScreenStyles.addButton}
               onPress={() =>
-                navigation.navigate('AddShoppingItem', {listId: item.id})
+                navigation.navigate('AddShoppingItem', {
+                  listId: item.id,
+                  onGoBack: onGoBack, // Pasar `onGoBack` a la pantalla de agregar ítem
+                })
               }>
               <Text style={HomeScreenStyles.addButtonText}>+ Add Item</Text>
             </TouchableOpacity>
