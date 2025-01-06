@@ -3,4 +3,5 @@ export type RootStackParamList = {
   AddShoppingListScreen: any;
   AddShoppingItem: {listId: number | any | null};
   EditShoppingItem: {itemId: number | any | null};
+  EditShoppingList: {listId: number | any | null};
 };
