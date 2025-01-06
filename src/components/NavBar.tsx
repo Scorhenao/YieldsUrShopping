@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
   return (
     <View style={HomeScreenStyles.navbarContainer}>
       <Image
-        source={require('../assets/imgs/yieldsUrShoppingLogo.jpg')}
+        source={require('../assets/imgs/yieldsUrShoppingLogo.png')}
         style={HomeScreenStyles.logo}
       />
 
