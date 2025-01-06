@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, Image, StyleSheet, Animated} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import {useNavigation} from '@react-navigation/native'; // Importamos useNavigation
+import {useNavigation} from '@react-navigation/native';
 
 const Splash = () => {
-  const navigation = useNavigation(); // Usamos useNavigation para navegar a la pantalla de Home
+  const navigation = useNavigation();
   const [logoPosition] = useState(new Animated.Value(-300));
 
   const [dot1Animation] = useState(new Animated.Value(0));
@@ -20,7 +20,6 @@ const Splash = () => {
       useNativeDriver: true,
     }).start();
 
-    // Animación de los puntos de carga
     const animateDots = () => {
       Animated.sequence([
         Animated.timing(dot1Animation, {
@@ -60,10 +59,9 @@ const Splash = () => {
 
     animateDots();
 
-    // Después de la animación de los puntos, navegamos a Home
     setTimeout(() => {
-      navigation.replace('Home'); // Cambia 'Home' por el nombre correcto de tu pantalla
-    }, 3000); // 3000 ms, ajusta el tiempo si es necesario
+      navigation.replace('Home');
+    }, 3000);
   }, [dot1Animation, dot2Animation, dot3Animation, logoPosition, navigation]);
 
   const renderDots = () => {

@@ -76,7 +76,7 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
           style={[
             AddShoppingListScreenStyles.input,
             {
-              backgroundColor: theme.colors.border,
+              backgroundColor: theme.colors.inputBackground,
               color: theme.colors.text,
             },
           ]}
@@ -89,7 +89,7 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
           style={[
             AddShoppingListScreenStyles.input,
             {
-              backgroundColor: theme.colors.border,
+              backgroundColor: theme.colors.inputBackground,
               color: theme.colors.text,
             },
           ]}
