@@ -23,7 +23,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   useEffect(() => {
-    console.log('Items loaded:', items);
+    console.log('Shopping lists loaded:', items);
   }, [items]);
 
   const toggleItemsVisibility = (listId: string) => {
@@ -40,7 +40,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const renderShoppingItem = ({item}: {item: ShoppingItem}) => (
     <View style={HomeScreenStyles.shoppingItemContainer}>
       <Text style={HomeScreenStyles.shoppingItemText}>
-        {item.name} (Quantity: {item.quantity}, Category: {item.category})
+        {item.name} {item.quantity ? `(Quantity: ${item.quantity})` : ''}
+        {item.category ? `(Category: ${item.category})` : ''}
       </Text>
       <Text
         style={[
@@ -54,43 +55,47 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     </View>
   );
 
-  const renderItem = ({item}: {item: ShoppingList}) => (
-    <View style={HomeScreenStyles.itemContainer}>
-      <View style={HomeScreenStyles.listHeader}>
-        <Text style={HomeScreenStyles.itemText}>
-          {item.name} ({item.purpose})
-        </Text>
-        <TouchableOpacity onPress={() => toggleItemsVisibility(item.id)}>
-          <Text style={HomeScreenStyles.arrow}>
-            {expandedListId === item.id ? '▲' : '▼'}
-          </Text>
-        </TouchableOpacity>
-      </View>
+  const renderItem = ({item}: {item: ShoppingList}) => {
+    console.log(`Rendering items for list ${item.name}:`, item.items);
 
-      {expandedListId === item.id && (
-        <>
-          {item.items && item.items.length > 0 ? (
-            <FlatList
-              data={item.items}
-              keyExtractor={i => i.id}
-              renderItem={renderShoppingItem}
-            />
-          ) : (
-            <Text style={HomeScreenStyles.emptyListText}>
-              This list doesn't have items.
+    return (
+      <View style={HomeScreenStyles.itemContainer}>
+        <View style={HomeScreenStyles.listHeader}>
+          <Text style={HomeScreenStyles.itemText}>
+            {item.name} {item.purpose ? `(${item.purpose})` : ''}
+          </Text>
+          <TouchableOpacity onPress={() => toggleItemsVisibility(item.id)}>
+            <Text style={HomeScreenStyles.arrow}>
+              {expandedListId === item.id ? '▲' : '▼'}
             </Text>
-          )}
-          <TouchableOpacity
-            style={HomeScreenStyles.addButton}
-            onPress={() =>
-              navigation.navigate('AddShoppingItem', {listId: item.id})
-            }>
-            <Text style={HomeScreenStyles.addButtonText}>+ Add Item</Text>
           </TouchableOpacity>
-        </>
-      )}
-    </View>
-  );
+        </View>
+
+        {expandedListId === item.id && (
+          <View>
+            {Array.isArray(item.items) && item.items.length > 0 ? (
+              <FlatList
+                data={item.items}
+                keyExtractor={i => i.id}
+                renderItem={renderShoppingItem}
+              />
+            ) : (
+              <Text style={HomeScreenStyles.emptyListText}>
+                This list doesn't have items.
+              </Text>
+            )}
+            <TouchableOpacity
+              style={HomeScreenStyles.addButton}
+              onPress={() =>
+                navigation.navigate('AddShoppingItem', {listId: item.id})
+              }>
+              <Text style={HomeScreenStyles.addButtonText}>+ Add Item</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    );
+  };
 
   return (
     <>

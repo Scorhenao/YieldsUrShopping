@@ -29,18 +29,20 @@ export const HomeScreenStyles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: 15,
+    alignItems: 'stretch',
+    padding: 10,
     backgroundColor: '#ffffff',
     marginBottom: 10,
     borderRadius: 5,
     elevation: 2,
   },
+
   listHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
+    color: '#007bff',
   },
   itemText: {
     fontSize: 16,
