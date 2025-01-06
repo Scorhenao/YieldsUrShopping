@@ -9,6 +9,7 @@ import {useTheme} from '../context/ThemeContext';
 import AddShoppingListScreenStyles from '../styles/css/AddShoppingListScreenStyles';
 import LightModeTheme from '../theme/LightModeTheme';
 import DarkModeTheme from '../theme/DarkModeTheme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AddShoppingListScreenProps {
   navigation: NavigationProp<any>;
@@ -24,7 +25,7 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
 
   const theme = darkMode ? DarkModeTheme : LightModeTheme;
 
-  const addList = () => {
+  const addList = async () => {
     if (listName.trim() === '' || listPurpose.trim() === '') {
       notify('danger', 'Error', 'Please fill in all fields.');
       return;
@@ -45,7 +46,10 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
       ] as ShoppingItem[],
     };
 
-    saveItems([...items, newList]);
+    const updatedItems = [...items, newList];
+    saveItems(updatedItems);
+    await AsyncStorage.setItem('@shopping_lists', JSON.stringify(updatedItems));
+
     setListName('');
     setListPurpose('');
     notify(
@@ -53,7 +57,16 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
       'List Added',
       'Your shopping list has been added successfully.',
     );
-    navigation.goBack();
+
+    if (navigation.canGoBack()) {
+      const route = navigation
+        .getState()
+        .routes.find(r => r.name === 'AddShoppingList');
+      if (route?.params?.onGoBack) {
+        await route.params.onGoBack();
+      }
+      navigation.goBack();
+    }
   };
 
   return (
@@ -123,9 +136,7 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
             <Text
               style={[
                 AddShoppingListScreenStyles.modalButtonText,
-                {
-                  color: theme.colors.text,
-                },
+                {color: theme.colors.text},
               ]}>
               Cancel
             </Text>

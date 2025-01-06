@@ -45,6 +45,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     return unsubscribe;
   }, [navigation]);
 
+  const onGoBack = useCallback(async () => {
+    setIsRefreshing(true);
+    try {
+      const storedItems = await AsyncStorage.getItem('@shopping_lists');
+      if (storedItems) {
+        saveItems(JSON.parse(storedItems));
+      }
+    } catch (error) {
+      console.error('Error reloading items:', error);
+    }
+    setIsRefreshing(false);
+  }, [saveItems]);
+
   const toggleItemsVisibility = (listId: string) => {
     setExpandedListId(expandedListId === listId ? null : listId);
   };
@@ -334,7 +347,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
             HomeScreenStyles.floatingButton,
             {backgroundColor: theme.colors.button},
           ]}
-          onPress={() => navigation.navigate('AddShoppingList')}>
+          onPress={() =>
+            navigation.navigate('AddShoppingList', {onGoBack: onGoBack})
+          }>
           <Text style={HomeScreenStyles.floatingButtonText}>+</Text>
         </TouchableOpacity>
       </View>
