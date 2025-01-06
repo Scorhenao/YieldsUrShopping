@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
 
   const toggleIcon = () => {
     Animated.timing(rotate, {
-      toValue: rotate.value === 0 ? 1 : 0,
+      toValue: isSun ? 1 : 0,
       duration: 300,
       useNativeDriver: true,
     }).start();
@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
           <MaterialCommunityIcons
             name={isSun ? 'weather-sunny' : 'weather-night'}
             size={30}
-            color="#black"
+            color="black"
           />
         </Animated.View>
       </TouchableOpacity>

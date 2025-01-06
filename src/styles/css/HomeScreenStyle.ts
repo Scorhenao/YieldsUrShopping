@@ -11,8 +11,8 @@ export const HomeScreenStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 10,
-    backgroundColor: 'black',
     elevation: 5,
+    width: '100%',
   },
   logo: {
     width: 40,
@@ -24,6 +24,7 @@ export const HomeScreenStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#333',
   },
   itemContainer: {
     flexDirection: 'column',

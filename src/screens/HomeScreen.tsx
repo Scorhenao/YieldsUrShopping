@@ -93,28 +93,30 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   );
 
   return (
-    <View style={HomeScreenStyles.container}>
+    <>
       <Navbar />
-      <Text style={HomeScreenStyles.title}>Shopping Lists</Text>
-      <FlatList
-        data={items}
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-        ListEmptyComponent={
-          <Text style={HomeScreenStyles.emptyText}>
-            There are no lists yet.
-          </Text>
-        }
-        refreshControl={
-          <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-        }
-      />
-      <TouchableOpacity
-        style={HomeScreenStyles.floatingButton}
-        onPress={() => navigation.navigate('AddShoppingList')}>
-        <Text style={HomeScreenStyles.floatingButtonText}>+</Text>
-      </TouchableOpacity>
-    </View>
+      <View style={HomeScreenStyles.container}>
+        <Text style={HomeScreenStyles.title}>Shopping Lists</Text>
+        <FlatList
+          data={items}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+          ListEmptyComponent={
+            <Text style={HomeScreenStyles.emptyText}>
+              There are no lists yet.
+            </Text>
+          }
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+          }
+        />
+        <TouchableOpacity
+          style={HomeScreenStyles.floatingButton}
+          onPress={() => navigation.navigate('AddShoppingList')}>
+          <Text style={HomeScreenStyles.floatingButtonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
