@@ -17,6 +17,7 @@ import {Switch} from 'react-native';
 import {notify} from '../components/NotificationManager';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useTheme} from '../context/ThemeContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>;
@@ -31,6 +32,18 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   useEffect(() => {
     console.log('Shopping lists loaded:', items);
   }, [items]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('Screen focused, refreshing items');
+      setIsRefreshing(true);
+      setTimeout(() => {
+        setIsRefreshing(false);
+      }, 100);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const toggleItemsVisibility = (listId: string) => {
     setExpandedListId(expandedListId === listId ? null : listId);
@@ -125,9 +138,29 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           {item.name}
         </Text>
         <View style={HomeScreenStyles.iconContainer}>
-          <TouchableOpacity onPress={() => console.log('Edit item', item.id)}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('EditShoppingItem', {
+                itemId: item.id,
+                onGoBack: async () => {
+                  setIsRefreshing(true);
+                  try {
+                    const storedItems = await AsyncStorage.getItem(
+                      '@shopping_lists',
+                    );
+                    if (storedItems) {
+                      saveItems(JSON.parse(storedItems));
+                    }
+                  } catch (error) {
+                    console.error('Error reloading items:', error);
+                  }
+                  setIsRefreshing(false);
+                },
+              })
+            }>
             <Icon name="pencil" size={24} color={theme.colors.text} />
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => deleteShoppingItem(expandedListId || '', item.id)}>
             <Icon name="trash" size={24} color={theme.colors.text} />

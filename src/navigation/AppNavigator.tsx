@@ -3,7 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import AddShoppingListScreen from '../screens/AddShoppingListScreen';
-import AddItemScreen from '../screens/AddItemScreen';
+import AddItemScreen from '../screens/AddShoppingItemScreen';
 import EditShoppingItemScreen from '../screens/EditShoppingItemScreen';
 
 export default function AppNavigator() {
