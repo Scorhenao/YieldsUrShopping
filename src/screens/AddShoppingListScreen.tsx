@@ -117,13 +117,15 @@ const AddShoppingListScreen: React.FC<AddShoppingListScreenProps> = ({
             style={[
               AddShoppingListScreenStyles.modalButton,
               AddShoppingListScreenStyles.cancelButton,
-              {backgroundColor: theme.colors.button},
+              {backgroundColor: theme.colors.cancelButton},
             ]}
             onPress={() => navigation.goBack()}>
             <Text
               style={[
                 AddShoppingListScreenStyles.modalButtonText,
-                {color: theme.colors.text},
+                {
+                  color: theme.colors.text,
+                },
               ]}>
               Cancel
             </Text>
