@@ -6,6 +6,8 @@ interface ILightModeTheme {
     hover: string;
     border: string;
     placeholder: string;
+    cancelButton: string;
+    inputBackground: string;
   };
 }
 
@@ -17,6 +19,8 @@ const LightModeTheme: ILightModeTheme = {
     hover: '#83bd84',
     border: '#4c4b4b',
     placeholder: '#211f1f',
+    cancelButton: '#ff0000',
+    inputBackground: '#ffffff89',
   },
 };
 

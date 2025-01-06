@@ -6,6 +6,8 @@ interface IDarkModeTheme {
     hover: string;
     border: string;
     placeholder: string;
+    cancelButton: string;
+    inputBackground: string;
   };
 }
 
@@ -17,6 +19,8 @@ const DarkModeTheme: IDarkModeTheme = {
     hover: '#83bd84',
     border: '#979696',
     placeholder: '#ffffff8d',
+    cancelButton: '#ff0000',
+    inputBackground: '#ffffff89',
   },
 };
 
