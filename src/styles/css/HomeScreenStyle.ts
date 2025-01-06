@@ -178,4 +178,13 @@ export const HomeScreenStyles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
+  arrowContainer: {
+    marginLeft: 'auto',
+  },
+  touchableRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
 });

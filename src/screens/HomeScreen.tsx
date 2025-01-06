@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {useShoppingList} from '../hooks/useShoppingList';
@@ -13,6 +14,7 @@ import {HomeScreenStyles} from '../styles/css/HomeScreenStyle';
 import {ShoppingItem} from '../common/interfaces/ShoppingItem';
 import Navbar from '../components/NavBar';
 import {Switch} from 'react-native';
+
 interface HomeScreenProps {
   navigation: NavigationProp<any>;
 }
@@ -48,6 +50,29 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     saveItems(updatedItems);
   };
 
+  // Función para eliminar la lista
+  const deleteShoppingList = (listId: string) => {
+    Alert.alert(
+      'Delete List',
+      'Are you sure you want to delete this shopping list?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            const updatedItems = items.filter(item => item.id !== listId);
+            saveItems(updatedItems);
+            Alert.alert('List Deleted', 'Your shopping list has been deleted.');
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+
   const renderShoppingItem = ({item}: {item: ShoppingItem}) => (
     <View style={HomeScreenStyles.shoppingItemContainer}>
       <Text style={HomeScreenStyles.shoppingItemText}>Name: {item.name}</Text>
@@ -80,19 +105,25 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
       </View>
     </View>
   );
+
   const renderItem = ({item}: {item: ShoppingList}) => {
     console.log(`Rendering items for list ${item.name}:`, item.items);
 
     return (
       <View style={HomeScreenStyles.itemContainer}>
         <View style={HomeScreenStyles.listHeader}>
-          <Text style={HomeScreenStyles.itemText}>
-            {item.name} {item.purpose ? `(${item.purpose})` : ''}
-          </Text>
-          <TouchableOpacity onPress={() => toggleItemsVisibility(item.id)}>
-            <Text style={HomeScreenStyles.arrow}>
-              {expandedListId === item.id ? '▲' : '▼'}
+          <TouchableOpacity
+            onPress={() => toggleItemsVisibility(item.id)}
+            onLongPress={() => deleteShoppingList(item.id)}
+            style={HomeScreenStyles.touchableRow}>
+            <Text style={HomeScreenStyles.itemText}>
+              {item.name} {item.purpose ? `(${item.purpose})` : ''}
             </Text>
+            <View style={HomeScreenStyles.arrowContainer}>
+              <Text style={HomeScreenStyles.arrow}>
+                {expandedListId === item.id ? '▲' : '▼'}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
 
