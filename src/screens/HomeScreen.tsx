@@ -14,6 +14,7 @@ import {HomeScreenStyles} from '../styles/css/HomeScreenStyle';
 import {ShoppingItem} from '../common/interfaces/ShoppingItem';
 import Navbar from '../components/NavBar';
 import {Switch} from 'react-native';
+import {notify} from '../components/NotificationManager';
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>;
@@ -50,7 +51,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
     saveItems(updatedItems);
   };
 
-  // Función para eliminar la lista
   const deleteShoppingList = (listId: string) => {
     Alert.alert(
       'Delete List',
@@ -65,7 +65,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
           onPress: () => {
             const updatedItems = items.filter(item => item.id !== listId);
             saveItems(updatedItems);
-            Alert.alert('List Deleted', 'Your shopping list has been deleted.');
+            notify(
+              'success',
+              'List Deleted',
+              'Your shopping list has been deleted.',
+            );
           },
         },
       ],
