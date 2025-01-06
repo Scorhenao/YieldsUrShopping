@@ -207,6 +207,49 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
   const renderList = ({item}: {item: ShoppingList}) => {
     console.log(`Rendering items for list ${item.name}:`, item.items);
 
+    const handleLongPress = () => {
+      Alert.alert(
+        'Manage List',
+        'Would you like to edit or delete this list?',
+        [
+          {
+            text: 'Edit',
+            onPress: () => {
+              navigation.navigate('EditShoppingList', {
+                listId: item.id,
+                onGoBack: async () => {
+                  setIsRefreshing(true);
+                  try {
+                    const storedItems = await AsyncStorage.getItem(
+                      '@shopping_lists',
+                    );
+                    if (storedItems) {
+                      saveItems(JSON.parse(storedItems));
+                    }
+                  } catch (error) {
+                    console.error('Error reloading items:', error);
+                  }
+                  setIsRefreshing(false);
+                },
+              });
+            },
+          },
+          {
+            text: 'Delete',
+            style: 'destructive',
+            onPress: () => {
+              deleteShoppingList(item.id);
+            },
+          },
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+        ],
+        {cancelable: true},
+      );
+    };
+
     return (
       <View
         style={[
@@ -216,7 +259,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
         <View style={HomeScreenStyles.listHeader}>
           <TouchableOpacity
             onPress={() => toggleItemsVisibility(item.id)}
-            onLongPress={() => deleteShoppingList(item.id)}
+            onLongPress={handleLongPress}
             style={HomeScreenStyles.touchableRow}>
             <Text
               style={[HomeScreenStyles.itemText, {color: theme.colors.text}]}>
