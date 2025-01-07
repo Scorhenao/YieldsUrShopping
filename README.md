@@ -72,11 +72,10 @@ Ahora que has ejecutado la aplicación correctamente, puedes modificarla.
 - 🌙 **Modo Oscuro**: Soporte para modo oscuro que cambia la apariencia de la aplicación.
 - 🖼 **Splash Screen**: Pantalla de carga personalizada con animaciones.
 
-## Capturas de Pantalla
+## Tutorial de la app
 
-// Aquí puedes agregar tus capturas de pantalla.
+[Ver el video](../docs/videos/tutorialApp.mp4)
 
----
 
 ## ¡Felicidades! :tada:
 
