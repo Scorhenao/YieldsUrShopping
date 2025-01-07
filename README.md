@@ -74,7 +74,7 @@ Ahora que has ejecutado la aplicación correctamente, puedes modificarla.
 
 ## Tutorial de la app
 
-[Ver el video](../docs/videos/tutorialApp.mp4)
+[Ver el video](./docs/videos/tutorialApp.mp4)
 
 
 ## ¡Felicidades! :tada:
