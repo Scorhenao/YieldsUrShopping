@@ -308,7 +308,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({navigation}) => {
               onPress={() =>
                 navigation.navigate('AddShoppingItem', {
                   listId: item.id,
-                  onGoBack: onGoBack, // Pasar `onGoBack` a la pantalla de agregar ítem
+                  onGoBack: onGoBack,
                 })
               }>
               <Text style={HomeScreenStyles.addButtonText}>+ Add Item</Text>

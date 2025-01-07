@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {NavigationProp} from '@react-navigation/native';
 import {useShoppingList} from '../hooks/useShoppingList';
@@ -11,6 +11,7 @@ import {useTheme} from '../context/ThemeContext';
 import LightModeTheme from '../theme/LightModeTheme';
 import DarkModeTheme from '../theme/DarkModeTheme';
 import AddShoppingItemScreenStyles from '../styles/css/AddShoppingItemScreenStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Importar AsyncStorage
 
 interface AddShoppingItemScreenProps {
   navigation: NavigationProp<any>;
@@ -26,11 +27,29 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
   const [itemCategory, setItemCategory] = useState('');
   const [itemPurchased, setItemPurchased] = useState(false);
   const [customCategory, setCustomCategory] = useState('');
+  const [customCategories, setCustomCategories] = useState<string[]>([]);
   const {darkMode} = useTheme();
   const {listId} = route.params;
 
   const theme = darkMode ? DarkModeTheme : LightModeTheme;
 
+  // Efecto para recuperar categorías personalizadas desde AsyncStorage
+  useEffect(() => {
+    const loadCustomCategories = async () => {
+      try {
+        const storedCategories = await AsyncStorage.getItem('customCategories');
+        if (storedCategories) {
+          setCustomCategories(JSON.parse(storedCategories));
+        }
+      } catch (error) {
+        console.error('Error loading custom categories:', error);
+      }
+    };
+
+    loadCustomCategories();
+  }, []);
+
+  // Agregar un nuevo ítem
   const addItem = () => {
     if (
       itemName.trim() === '' ||
@@ -57,7 +76,7 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
       return list;
     });
 
-    saveItems(updatedItems); // Guardar los items actualizados
+    saveItems(updatedItems);
 
     setItemName('');
     setItemCategory('');
@@ -65,18 +84,27 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
     setItemPurchased(false);
     setCustomCategory('');
 
+    // Si el usuario crea una categoría personalizada nueva
+    if (customCategory.trim() && !customCategories.includes(customCategory)) {
+      const updatedCustomCategories = [...customCategories, customCategory];
+      setCustomCategories(updatedCustomCategories);
+      AsyncStorage.setItem(
+        'customCategories',
+        JSON.stringify(updatedCustomCategories),
+      ); // Guardar en AsyncStorage
+    }
+
     notify(
       'success',
       'Item Added',
       'Your shopping item has been added successfully.',
     );
 
-    // Aseguramos que se recarguen los datos en la pantalla de inicio
     if (route.params?.onGoBack) {
-      route.params.onGoBack(); // Llamar a onGoBack para refrescar los datos
+      route.params.onGoBack();
     }
 
-    navigation.goBack(); // Volver a la pantalla de inicio
+    navigation.goBack();
   };
 
   return (
@@ -120,8 +148,15 @@ const AddShoppingItemScreen: React.FC<AddShoppingItemScreenProps> = ({
             }}
             onValueChange={setItemCategory}>
             <Picker.Item label="Select a category" value="" />
-            {Object.keys(DefaultCategories).map((category, index) => (
+            {DefaultCategories.map((category, index) => (
               <Picker.Item key={index} label={category} value={category} />
+            ))}
+            {customCategories.map((category, index) => (
+              <Picker.Item
+                key={`custom-${index}`}
+                label={category}
+                value={category}
+              />
             ))}
           </Picker>
 
