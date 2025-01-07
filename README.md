@@ -100,4 +100,4 @@ Para aprender más sobre React Native, consulta los siguientes recursos:
 - [Aprende lo Básico](https://reactnative.dev/docs/getting-started) - Un **recorrido guiado** de los **conceptos básicos** de React Native.
 - [Blog](https://reactnative.dev/blog) - Lee los últimos posts oficiales del **Blog** de React Native.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - El repositorio de **código abierto** de React Native en GitHub.
-```
+
